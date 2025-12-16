@@ -1,0 +1,22 @@
+diff --git a/src/core/database.rs b/src/core/database.rs
+index a82b755..f81f6e7 100644
+--- a/src/core/database.rs
++++ b/src/core/database.rs
+@@ -890,7 +890,7 @@ impl Database {
+     /// An error if querying the DB goes wrong.
+     pub async fn update_version(&self) -> Result<()> {
+         let connection = self.imp().connection.get().unwrap();
+-        let resource = tracker::Resource::new(Some("health"));
++        let resource = tracker::Resource::new(Some("health:Version"));
+         resource.set_int64("health:version", DB_VERSION);
+         let v = connection.update_resource(None, &resource, None::<&gio::Cancellable>);
+         if let Err(e) = v {
+@@ -922,7 +922,7 @@ impl Database {
+     /// An error if querying the DB goes wrong.
+     pub async fn create_version(&self) -> Result<()> {
+         let imp = self.imp();
+-        let resource = tracker::Resource::new(Some("health"));
++        let resource = tracker::Resource::new(Some("health:Version"));
+         resource.set_uri("rdf:type", "health:Version");
+         resource.set_int64("health:version", DB_VERSION);
+         let connection = imp.connection.get().unwrap();
